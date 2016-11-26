@@ -29,7 +29,7 @@ import (
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, `<h1>Online Apis provided by Forec</h1> 
-					Documents in English can be found <a href="http://forec.cn/api-document">here</a>
+					Documents in English can be found <a href="https://github.com/Forec/web-api">here</a>
 					</br>
 					中文版 API 文档可在 <a href="http://blog.forec.cn/apis/index.html">此处</a>查看`)
 }
