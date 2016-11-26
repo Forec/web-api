@@ -25,9 +25,9 @@ import (
 	"compress/gzip"
 	"encoding/json"
 	"fmt"
-	"strings"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 type returnMessage struct {
@@ -68,7 +68,7 @@ func OnlineCompress(w http.ResponseWriter, r *http.Request) {
 	message := new(returnMessage)
 	message.Result = ""
 	message.Code = 400 // failed
-	if r.FormValue("method") == "gzip" {
+	if strings.ToUpper(r.FormValue("method")) == "GZIP" {
 		if r.FormValue("plain") != "" {
 			message.Result, message.Code = gzip_encode(r.FormValue("plain"))
 		} else if r.FormValue("cipher") != "" {
