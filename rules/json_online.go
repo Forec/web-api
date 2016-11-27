@@ -1,6 +1,6 @@
 /*
 author: Forec
-last edit date: 2016/11/27
+last edit date: 2016/11/28
 email: forec@bupt.edu.cn
 LICENSE
 Copyright (c) 2015-2017, Forec <forec@bupt.edu.cn>
@@ -18,29 +18,48 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
-package main
+package MyWebApi
 
 import (
-	rules "MyWebApi/rules"
+	"encoding/json"
 	"fmt"
-	"log"
+	js "github.com/bitly/go-simplejson"
 	"net/http"
+	"strings"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `<h1>Online Apis provided by Forec</h1> 
-					Documents in English can be found <a href="https://github.com/Forec/web-api">here</a>
-					</br>
-					中文版 API 文档可在 <a href="http://blog.forec.cn/apis/index.html">此处</a> 查看`)
+func jsonParser(jsonStr string, keyList string, T string) (string, int) {
+	js, err := js.NewJson([]byte(jsonStr))
+	if err != nil {
+		return "", 400
+	}
+	keys := strings.Split(keyList, ",")
+	for _, key := range keys {
+		js = js.Get(key)
+		if js == nil {
+			return "", 400
+		}
+	}
+	switch strings.ToUpper(T) {
+	case "INT":
+	case "FLOAT":
+	case "BOOL":
+	case "ARRAY":
+	case "MAP":
+	case "STRING":
+	case "STRINGARRAY":
+	default:
+	}
 }
 
-func main() {
-	http.HandleFunc("/", index)                        //  index
-	http.HandleFunc("/compress", rules.OnlineCompress) // compress
-	http.HandleFunc("/crypto", rules.OnlineCrypto)     // crypto
-	http.HandleFunc("/json", rules.OnlineJSON)
-	err := http.ListenAndServe(":9090", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+func OnlineJSON(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	message := new(returnMessage)
+	message.Result = ""
+	message.Code = 400
+	message.Result, message.Code = jsonParser(r.FormValue("json"),
+		r.FormValue("key"),
+		r.FormValue("type"))
+	bytes, _ := json.Marshal(message)
+	fmt.Fprint(w, string(bytes))
 }

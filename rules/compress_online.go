@@ -22,11 +22,14 @@ package MyWebApi
 
 import (
 	"bytes"
+	dcpbzip2 "compress/bzip2"
 	"compress/gzip"
 	"compress/zlib"
+	"encoding/base32"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	cpbzip2 "github.com/larzconwell/bzip2"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -65,7 +68,37 @@ func gzip_decode(cipher string) (string, int) {
 	return string(undatas), 200
 }
 
+func bzip2_encode(plain string, level int) (string, int) {
+	var b bytes.Buffer
+	w, err := cpbzip2.NewWriterLevel(&b, level)
+	if err != nil {
+		return "", 500
+	}
+	defer w.Close()
+	w.Write([]byte(plain))
+	w.Flush()
+	return string(b.Bytes()), 300
+}
+
+func bzip2_decode(cipher string) (string, int) {
+	var b bytes.Buffer
+	var err error
+	length, err := b.Write([]byte(cipher))
+	if length != len(cipher) || err != nil {
+		return "", 500
+	}
+	r := dcpbzip2.NewReader(&b)
+	undatas, err := ioutil.ReadAll(r)
+	if err != nil {
+		return "", 400
+	}
+	return string(undatas), 200
+}
+
 func zlib_encode(plain string, level int) (string, int) {
+	if level == 0 {
+		return plain, 300
+	}
 	var buf bytes.Buffer
 	w, err := zlib.NewWriterLevel(&buf, level)
 	if err != nil {
@@ -107,6 +140,18 @@ func base64_decode(cipher string) (string, int) {
 	return string(plain), 200
 }
 
+func base32_encode(plain string) (string, int) {
+	return base32.StdEncoding.EncodeToString([]byte(plain)), 300
+}
+
+func base32_decode(cipher string) (string, int) {
+	plain, err := base32.StdEncoding.DecodeString(cipher)
+	if err != nil {
+		return "", 400
+	}
+	return string(plain), 200
+}
+
 func OnlineCompress(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	var err error
@@ -126,12 +171,22 @@ func OnlineCompress(w http.ResponseWriter, r *http.Request) {
 			level = 0
 		}
 	}
+
 	switch strings.ToUpper(r.FormValue("method")) {
 	case "GZIP":
 		if r.FormValue("plain") != "" {
 			message.Result, message.Code = gzip_encode(r.FormValue("plain"), level)
 		} else if r.FormValue("cipher") != "" {
 			message.Result, message.Code = gzip_decode(r.FormValue("cipher"))
+		}
+	case "BZIP2":
+		if level < 0 {
+			level = 9
+		}
+		if r.FormValue("plain") != "" {
+			message.Result, message.Code = bzip2_encode(r.FormValue("plain"), level)
+		} else if r.FormValue("cipher") != "" {
+			message.Result, message.Code = bzip2_decode(r.FormValue("cipher"))
 		}
 	case "ZLIB":
 		if r.FormValue("plain") != "" {
@@ -144,6 +199,12 @@ func OnlineCompress(w http.ResponseWriter, r *http.Request) {
 			message.Result, message.Code = base64_encode(r.FormValue("plain"))
 		} else if r.FormValue("cipher") != "" {
 			message.Result, message.Code = base64_decode(r.FormValue("cipher"))
+		}
+	case "BASE32":
+		if r.FormValue("plain") != "" {
+			message.Result, message.Code = base32_encode(r.FormValue("plain"))
+		} else if r.FormValue("cipher") != "" {
+			message.Result, message.Code = base32_decode(r.FormValue("cipher"))
 		}
 	default:
 	}
