@@ -18,28 +18,22 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
-package main
+package MyWebApi
 
-import (
-	rules "MyWebApi/rules"
-	"fmt"
-	"log"
-	"net/http"
-)
-
-func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `<h1>Online Apis provided by Forec</h1> 
-					Documents in English can be found <a href="https://github.com/Forec/web-api">here</a>
-					</br>
-					中文版 API 文档可在 <a href="http://blog.forec.cn/apis/index.html">此处</a> 查看`)
+type returnMessage struct {
+	Code   int    `json:"code"`
+	Result string `json:"result"`
 }
 
-func main() {
-	http.HandleFunc("/", index)                        //  index
-	http.HandleFunc("/compress", rules.OnlineCompress) // compress
-	http.HandleFunc("/crypto", rules.OnlineCrypto)     // crypto
-	err := http.ListenAndServe(":9090", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
-}
+/* Code
+ *
+ * Compression:
+ * 200 : decompression succeed
+ * 300 : compression   succeed
+ * 400 : input values  invalid
+ * 500 : server internal error
+ *
+ * Crypto:
+ * 300 : enciphering   succeed
+ *
+ */
