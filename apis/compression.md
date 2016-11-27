@@ -30,13 +30,14 @@ The server will returns data in JSON format, it has two fields:
 * Notice that you need to decode the `Result` by UTF-8 since the server will automatically encode the JSON by UTF-8.
 
 ## GZIP
-You need to specify the `method` as `gzip` or `GZIP`. In the example below, you can find that the results seem to be same when we assign different levels. The plain text in our test case is "test", which is too short, so the main body of compression is same, but there's still something different in the header of `gzip` compression. Notice that the first case is `\u0000` and the second case is `\u0004`, that differs the two compression levels from each other.
+You need to specify the `method` as `gzip` or `GZIP`.   
+You can find that the results seem to be same when we assign different levels in the example below. The plain text in our test case is "test", which is too short, so the main body of compression is same. However, notice that the first case is `\u0000` and the second case is `\u0004`, that differs the two compression levels from each other.
 ```bash
 > wget http://api.forec.cn/compress?method=gzip&plain=test
-> {"code":300,"result":"\u001f\ufffd\u0008\u0000\u0000\tn
+{"code":300,"result":"\u001f\ufffd\u0008\u0000\u0000\tn
     \ufffd\u0000\ufffd*I-.\u0001\u0000\u0000\u0000\ufffd\ufffd"}
 > wget http://api.forec.cn/compress?method=gzip&plain=test&level=1
-> {"code":300,"result":"\u001f\ufffd\u0008\u0000\u0000\tn
+{"code":300,"result":"\u001f\ufffd\u0008\u0000\u0000\tn
     \ufffd\u0004\ufffd*I-.\u0001\u0000\u0000\u0000\ufffd\ufffd"}
 ```
 
@@ -44,16 +45,16 @@ You need to specify the `method` as `gzip` or `GZIP`. In the example below, you 
 You need to specify the `method` as `zlib` or `ZLIB`. The reason for why the two cases are similar is same to `GZIP`.
 ```bash
 > wget http://api.forec.cn/compress?method=zlib&plain=test
-> {"code":300,"result":"x\ufffd*I-.\u0001\u0004\u0000\u0000\ufffd\ufffd\u0004]\u0001\ufffd"}
+{"code":300,"result":"x\ufffd*I-.\u0001\u0004\u0000\u0000\ufffd\ufffd\u0004]\u0001\ufffd"}
 > wget http://api.forec.cn/compress?method=zlib&plain=test&level=1
-> {"code":300,"result":"x\u0001*I-.\u0001\u0004\u0000\u0000\ufffd\ufffd\u0004]\u0001\ufffd"}
+{"code":300,"result":"x\u0001*I-.\u0001\u0004\u0000\u0000\ufffd\ufffd\u0004]\u0001\ufffd"}
 ```
 
 ## BASE64
 You need to specify the `method` as `base64` or `BASE64`.
 ```bash
 > wget http://api.forec.cn/compress?method=base64&plain=test
-> {"code":300,"result":"dGVzdA=="}
+{"code":300,"result":"dGVzdA=="}
 > wget http://api.forec.cn/compress?method=base64&cipher=dGVzdA==
-> {"code":200,"result":"test"}
+{"code":200,"result":"test"}
 ```

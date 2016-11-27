@@ -29,12 +29,12 @@ The server will returns data in JSON format, it has two fields:
  * `bits`: the result's length, its unit is byte. It can be 16 or 32, if you do not specify this field, it will be 32 in defaults.
  * `format`: default is "U", which means all letters in result will be upper case. You can set it to "L", then the letter will be lower case.
 
-* Exmple:
+* Example:
 ```bash
 > wget http://api.forec.cn/crypto?method=md5&plain=test
-> {"code":300,"result":"098F6BCD4621D373CADE4E832627B4F6"}
+{"code":300,"result":"098F6BCD4621D373CADE4E832627B4F6"}
 > wget http://api.forec.cn/crypto?method=md5&plain=test&format=L
-> {"code":300,"result":"098f6bcd4621d373cade4e832627b4f6"}
+{"code":300,"result":"098f6bcd4621d373cade4e832627b4f6"}
 > wget http://api.forec.cn/crypto?method=md5&plain=test&bits=16&format=L
-> {"code":300,"result":"4621d373cade4e83"}
+{"code":300,"result":"4621d373cade4e83"}
 ```
