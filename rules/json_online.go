@@ -21,35 +21,85 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package MyWebApi
 
 import (
-	"encoding/json"
+	//	"encoding/json"
 	"fmt"
 	js "github.com/bitly/go-simplejson"
 	"net/http"
 	"strings"
 )
 
+func checkErr(err error, resultIfNoError string) (string, int) {
+	if err != nil {
+		return "null", 400
+	}
+	return resultIfNoError, 200
+}
+
+func normalValue(js *js.Json) (string, int) {
+	encodeBytesValue, errEncode := js.Encode()
+	encodeStringValue := string(encodeBytesValue)
+	return checkErr(errEncode,
+		encodeStringValue[1:len(encodeStringValue)-1])
+}
+
 func jsonParser(jsonStr string, keyList string, T string) (string, int) {
+	if keyList == "" {
+		return jsonStr, 200
+	}
 	js, err := js.NewJson([]byte(jsonStr))
 	if err != nil {
-		return "", 400
+		return "null", 400
 	}
 	keys := strings.Split(keyList, ",")
+	var exist bool = true
 	for _, key := range keys {
-		js = js.Get(key)
-		if js == nil {
-			return "", 400
+		if js, exist = js.CheckGet(key); !exist {
+			return "null", 400
 		}
 	}
+
 	switch strings.ToUpper(T) {
 	case "INT":
+		intValue, err := js.Int()
+		return checkErr(err, fmt.Sprintf("%d", intValue))
 	case "FLOAT":
+		floatValue, err := js.Float64()
+		return checkErr(err, fmt.Sprintf("%f", floatValue))
 	case "BOOL":
-	case "ARRAY":
-	case "MAP":
+		boolValue, err := js.Bool()
+		return checkErr(err, fmt.Sprintf("%v", boolValue))
 	case "STRING":
+		stringValue, err := js.String()
+		return checkErr(err, stringValue)
 	case "STRINGARRAY":
+		stringArrayValue, err := js.StringArray()
+		resultIfNoError := "["
+		for i, stringItem := range stringArrayValue {
+			resultIfNoError += stringItem
+			if i < len(stringArrayValue)-1 {
+				resultIfNoError += ","
+			}
+		}
+		return checkErr(err, resultIfNoError+"]")
+	case "ARRAY":
+		if _, err := js.Array(); err != nil {
+			return normalValue(js)
+		} else {
+			return "null", 400
+		}
+	case "MAP":
+		if _, err := js.Map(); err != nil {
+			return normalValue(js)
+		} else {
+			return "null", 400
+		}
 	default:
 	}
+	bytes, err := js.Encode()
+	if err != nil {
+		return "", 500
+	}
+	return string(bytes), 200
 }
 
 func OnlineJSON(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +110,7 @@ func OnlineJSON(w http.ResponseWriter, r *http.Request) {
 	message.Result, message.Code = jsonParser(r.FormValue("json"),
 		r.FormValue("key"),
 		r.FormValue("type"))
-	bytes, _ := json.Marshal(message)
-	fmt.Fprint(w, string(bytes))
+	//bytes, _ := json.Marshal(message)
+	//fmt.Fprint(w, string(bytes))
+	fmt.Fprint(w, message.Result)
 }

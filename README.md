@@ -1,6 +1,6 @@
 # Web APIs（forec.cn 提供的在线 API）
 
-> This repository contains the source of apis provided by my [website](http://forec.cn). The functions provided are under constructed.
+> This repository contains the source of apis provided by my [website](http://forec.cn). Functions are under constructed.
 
 The prefix of all request url is: **`http://api.forec.cn`** .
 
@@ -14,12 +14,13 @@ Provides some online APIs for programming, such as compression and encipher. For
 ## Documentation
 * [Compression](apis/compression.md)
 * [Crypto](apis/crypto.md)
-* [Json](apis/json.md)
+* [JSON](apis/json.md)
 
 ## Update-Logs
 * 2016-11-26: Add this repository and provides gzip.
 * 2016-11-27: Add md5, zlib, base64.
 * 2016-11-28: Add sha*, bzip2, json, base32.
+* 2016-11-28: Finish json.
 
 ## License
 All codes in this repository are licensed under the terms you may find in the file named "LICENSE" in this directory.
