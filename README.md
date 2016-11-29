@@ -1,5 +1,7 @@
 # Web APIs（forec.cn 提供的在线 API）
 
+[![Build Status](https://travis-ci.org/Forec/web-api.png)](https://travis-ci.org/Forec/web-api) 
+
 > This repository contains the source of apis provided by my [website](http://forec.cn). Functions are under constructed.
 
 The prefix of all request url is: **`http://api.forec.cn`** .
