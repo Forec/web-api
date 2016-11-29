@@ -1,0 +1,12 @@
+language: go
+
+go:
+	- 1.7.3
+	- tip
+
+install:
+	- go get github.com/larzconwell/bzip2
+	- go get github.com/bitly/go-simplejson
+script:
+	- go run server.go &
+	- go test -v MyWebApi/test

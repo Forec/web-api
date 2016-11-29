@@ -21,7 +21,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package MyWebApi
 
 import (
-	//	"encoding/json"
 	"fmt"
 	js "github.com/bitly/go-simplejson"
 	"net/http"
@@ -110,7 +109,5 @@ func OnlineJSON(w http.ResponseWriter, r *http.Request) {
 	message.Result, message.Code = jsonParser(r.FormValue("json"),
 		r.FormValue("key"),
 		r.FormValue("type"))
-	//bytes, _ := json.Marshal(message)
-	//fmt.Fprint(w, string(bytes))
 	fmt.Fprint(w, message.Result)
 }
