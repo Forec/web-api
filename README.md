@@ -1,6 +1,8 @@
 # Web APIs（forec.cn 提供的在线 API）
 
+[![License](http://7xktmz.com1.z0.glb.clouddn.com/license-UDL.svg)](https://github.com/Forec/web-api/blob/master/LICENSE) 
 [![Build Status](https://travis-ci.org/Forec/web-api.png)](https://travis-ci.org/Forec/web-api) 
+[![Doc](http://7xktmz.com1.z0.glb.clouddn.com/docs-icon.svg)](http://blog.forec.cn/apis/index.html)
 
 > This repository contains the source of apis provided by my [website](http://forec.cn). Functions are under constructed.
 
