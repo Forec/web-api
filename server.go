@@ -1,6 +1,6 @@
 /*
 author: Forec
-last edit date: 2016/11/27
+last edit date: 2016/12/17
 email: forec@bupt.edu.cn
 LICENSE
 Copyright (c) 2015-2017, Forec <forec@bupt.edu.cn>
@@ -23,15 +23,34 @@ package main
 import (
 	rules "MyWebApi/rules"
 	"fmt"
+	"os"
 	"log"
+	"bufio"
 	"net/http"
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `<h1>Online Apis provided by Forec</h1> 
-					Documents in English can be found <a href="https://github.com/Forec/web-api">here</a>
-					</br>
-					中文版 API 文档可在 <a href="http://blog.forec.cn/apis/index.html">此处</a> 查看`)
+	file, err := os.Open("api.html")
+	if err != nil {
+		fmt.Fprint(w, `服务器错误！`)
+		return
+	}
+	defer file.Close()
+	fileReader := bufio.NewReader(file)
+	buf := make([]byte, 0, 4096)
+	alreadyRead := 0
+	for {
+		length, err := fileReader.Read(buf[alreadyRead:4096])
+		if err != nil{
+			fmt.Fprint(w, `服务器错误！`)
+			return
+		}
+		alreadyRead += length
+		if length == 0{
+			break
+		}
+	}
+	fmt.Fprintf(w, string(buf[:alreadyRead]))
 }
 
 func main() {
