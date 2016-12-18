@@ -27,7 +27,7 @@ import (
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "http://api.forec.cn/", http.StatusFound)
+	http.Redirect(w, r, "http://forec.cn/api.html", http.StatusFound)
 	return
 }
 
