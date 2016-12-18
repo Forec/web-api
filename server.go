@@ -22,35 +22,13 @@ package main
 
 import (
 	rules "MyWebApi/rules"
-	"fmt"
-	"os"
 	"log"
-	"bufio"
 	"net/http"
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	file, err := os.Open("api.html")
-	if err != nil {
-		fmt.Fprint(w, `服务器错误！`)
-		return
-	}
-	defer file.Close()
-	fileReader := bufio.NewReader(file)
-	buf := make([]byte, 0, 4096)
-	alreadyRead := 0
-	for {
-		length, err := fileReader.Read(buf[alreadyRead:4096])
-		if err != nil{
-			fmt.Fprint(w, `服务器错误！`)
-			return
-		}
-		alreadyRead += length
-		if length == 0{
-			break
-		}
-	}
-	fmt.Fprintf(w, string(buf[:alreadyRead]))
+	http.Redirect(w, r, "http://api.forec.cn/", http.StatusFound)
+	return
 }
 
 func main() {
