@@ -39,11 +39,11 @@ The server will returns data in JSON format, it has two fields:
 
 * Example:
 ```bash
-> wget http://api.forec.cn/crypto?method=md5&plain=test
+> curl http://api.forec.cn/crypto?method=md5&plain=test
 {"code":300,"result":"098F6BCD4621D373CADE4E832627B4F6"}
-> wget http://api.forec.cn/crypto?method=md5&plain=test&format=L
+> curl http://api.forec.cn/crypto?method=md5&plain=test&format=L
 {"code":300,"result":"098f6bcd4621d373cade4e832627b4f6"}
-> wget http://api.forec.cn/crypto?method=md5&plain=test&bits=16&format=L
+> curl http://api.forec.cn/crypto?method=md5&plain=test&bits=16&format=L
 {"code":300,"result":"4621d373cade4e83"}
 ```
 
@@ -60,20 +60,20 @@ The server will returns data in JSON format, it has two fields:
 * There's an optional field for sha enciphering: `format` decides whether the letters will be in upper case or lower case. By default, it will be "U", that means all letters in result will be in upper case. You can set it to "L", then the letter will be lower case.
 * Example:
 ```bash
-> wget http://api.forec.cn/crypto?method=sha1&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha1&plain=testthismessage&format=L
 {"code":300,"result":"fa715c9065385cc3acdeb93a7b66583fdf06a5b6"}
-> wget http://api.forec.cn/crypto?method=sha224&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha224&plain=testthismessage&format=L
 {"code":300,"result":"a08d72e16ab5b7f92eb09c35fa351778ca2dbfe5faa9b5088d8ef421"}
-> wget http://api.forec.cn/crypto?method=sha256&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha256&plain=testthismessage&format=L
 {"code":300,"result":"dca92fb06a35f32078ff400c7bb33f8994ba4b2792d12eb2de4507096ae80b08"}
-> wget http://api.forec.cn/crypto?method=sha384&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha384&plain=testthismessage&format=L
 {"code":300,"result":"00924267b607f6fac3de0174a32af14bb420f85b65c8fb4c1
     3801f337bab6682d5dbbd1d5bde1d6842bcdff01ec15117"}
-> wget http://api.forec.cn/crypto?method=sha512&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha512&plain=testthismessage&format=L
 {"code":300,"result":"90d8971c2b70b32dd24e04f3e114f5268bc10f9621df4960c
     ccc0e3bdc5d74c1e631a1110fabe24cb65d249e17b9119b319e2e2600a6a39987e576c5d86e8dde"}
-> wget http://api.forec.cn/crypto?method=sha512_224&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha512_224&plain=testthismessage&format=L
 {"code":300,"result":"b2d961fa6d7f718ee8336ccbd3d60c030128dc2bf9edb8da92afdbb1"}
-> wget http://api.forec.cn/crypto?method=sha512_256&plain=testthismessage&format=L
+> curl http://api.forec.cn/crypto?method=sha512_256&plain=testthismessage&format=L
 {"code":300,"result":"993e73b7f67bb26cd796833ce5fa21c35b1e55e4b763d6e7982f33cf0fcac593"}
 ```
