@@ -20,11 +20,5 @@ Provides some online APIs for programming, such as compression and encipher. For
 * [Crypto](apis/crypto.md)
 * [JSON](apis/json.md)
 
-## Update-Logs
-* 2016-11-26: Add this repository and provides gzip.
-* 2016-11-27: Add md5, zlib, base64.
-* 2016-11-28: Add sha*, bzip2, json, base32.
-* 2016-11-28: Finish json.
-
 ## License
 All codes in this repository are licensed under the terms you may find in the file named "LICENSE" in this directory.

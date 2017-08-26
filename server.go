@@ -3,7 +3,7 @@ author: Forec
 last edit date: 2016/12/17
 email: forec@bupt.edu.cn
 LICENSE
-Copyright (c) 2015-2017, Forec <forec@bupt.edu.cn>
+Copyright (c) 2015-2018, Forec <forec@bupt.edu.cn>
 
 Permission to use, copy, modify, and/or distribute this code for any
 purpose with or without fee is hereby granted, provided that the above
@@ -32,10 +32,11 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", index)                        //  index
+	http.HandleFunc("/", index)                        // index
 	http.HandleFunc("/compress", rules.OnlineCompress) // compress
 	http.HandleFunc("/crypto", rules.OnlineCrypto)     // crypto
-	http.HandleFunc("/json", rules.OnlineJSON)
+	http.HandleFunc("/json", rules.OnlineJSON)         // json
+	http.HandleFunc("/regexp", rules.OnlineRegexp)
 	err := http.ListenAndServe(":9090", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

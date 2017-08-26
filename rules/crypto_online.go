@@ -3,7 +3,7 @@ author: Forec
 last edit date: 2016/11/27
 email: forec@bupt.edu.cn
 LICENSE
-Copyright (c) 2015-2017, Forec <forec@bupt.edu.cn>
+Copyright (c) 2015-2018, Forec <forec@bupt.edu.cn>
 
 Permission to use, copy, modify, and/or distribute this code for any
 purpose with or without fee is hereby granted, provided that the above

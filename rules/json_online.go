@@ -1,9 +1,9 @@
 /*
 author: Forec
-last edit date: 2016/11/28
+last edit date: 2017/08/26
 email: forec@bupt.edu.cn
 LICENSE
-Copyright (c) 2015-2017, Forec <forec@bupt.edu.cn>
+Copyright (c) 2015-2018, Forec <forec@bupt.edu.cn>
 
 Permission to use, copy, modify, and/or distribute this code for any
 purpose with or without fee is hereby granted, provided that the above
@@ -49,7 +49,7 @@ func jsonParser(jsonStr string, keyList string, T string) (string, int) {
 	if err != nil {
 		return "null", 400
 	}
-	keys := strings.Split(keyList, ",")
+	keys := strings.Split(keyList, ":")
 	var exist bool = true
 	for _, key := range keys {
 		if js, exist = js.CheckGet(key); !exist {
