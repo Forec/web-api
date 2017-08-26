@@ -19,6 +19,7 @@ Provides some online APIs for programming, such as compression and encipher. For
 * [Compression](apis/compression.md)
 * [Crypto](apis/crypto.md)
 * [JSON](apis/json.md)
+* [Regexp](apis/regexp.md)
 
 ## License
 All codes in this repository are licensed under the terms you may find in the file named "LICENSE" in this directory.

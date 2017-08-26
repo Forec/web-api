@@ -1,6 +1,6 @@
 # Regexp
 
-[查看中文 正则模式 文档](http://blog.forec.cn/apis/regexp.html)
+[查看中文 正则模式 文档](http://blog.forec.cn/apis/regexp.html)  
 [查看中文 API 索引文档](http://blog.forec.cn/apis/index.html)
 
 URL prefix for Regexp requests is: `http://api.forec.cn/regexp`, you can use both POST/GET method to send your request. POST is suggested in this mode.
